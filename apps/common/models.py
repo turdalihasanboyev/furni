@@ -2,7 +2,6 @@ from django.db import models
 
 
 class BaseModel(models.Model):
-    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -11,8 +10,8 @@ class BaseModel(models.Model):
 
 
 class SubEmail(BaseModel):
-    name = models.CharField(max_length=100, db_index=True)
-    email = models.EmailField(unique=True, max_length=100, db_index=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True, max_length=100)
 
     class Meta:
         verbose_name = 'Sub Email'

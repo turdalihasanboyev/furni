@@ -6,9 +6,9 @@ from apps.common.models import BaseModel
 
 
 class Article(BaseModel):
-    title = models.CharField(max_length=150, unique=True, db_index=True)
+    title = models.CharField(max_length=150, unique=True)
     desciption = RichTextField(null=True, blank=True)
-    image = models.ImageField(upload_to='article_images', default='images/default.png')
+    image = models.ImageField(upload_to='article_images', null=True, blank=True)
     author = models.CharField(max_length=100)
 
     class Meta:

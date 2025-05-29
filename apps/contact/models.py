@@ -6,9 +6,9 @@ from apps.common.models import BaseModel
 
 
 class Contact(BaseModel):
-    first_name = models.CharField(max_length=100, db_index=True)
-    last_name = models.CharField(max_length=100, db_index=True)
-    email = models.EmailField(max_length=100, unique=True, db_index=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100, unique=True)
     message = RichTextField(null=True, blank=True)
 
     class Meta:

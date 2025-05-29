@@ -6,8 +6,8 @@ from apps.common.models import BaseModel
 
 
 class Testimonial(BaseModel):
-    full_name = models.CharField(max_length=225, db_index=True)
-    image = models.ImageField(upload_to='testimonial_images', default='images/default.png')
+    full_name = models.CharField(max_length=225)
+    image = models.ImageField(upload_to='testimonial_images', null=True, blank=True)
     job = models.CharField(max_length=225)
     testimonial = RichTextField(null=True, blank=True)
 
@@ -20,8 +20,8 @@ class Testimonial(BaseModel):
 
 
 class Agent(BaseModel):
-    full_name = models.CharField(max_length=225, db_index=True)
-    image = models.ImageField(upload_to='agent_images', default='images/default.png')
+    full_name = models.CharField(max_length=225)
+    image = models.ImageField(upload_to='agent_images', null=True, blank=True)
     job = models.CharField(max_length=225)
     description = RichTextField(null=True, blank=True)
 
