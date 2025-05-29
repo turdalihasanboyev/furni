@@ -16,14 +16,14 @@ class Product(BaseModel):
     name = models.CharField(max_length=250, unique=True)
     image = models.ImageField(upload_to='product_images', null=True, blank=True)
     description = RichTextField(null=True, blank=True)
-    price = models.IntegerField(default=0)
-    percentage = models.IntegerField(default=0)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    percentage = models.PositiveIntegerField(default=0)
     price_type = models.CharField(max_length=10, choices=PRICE_TYPE, default='USD')
 
     @property
     def discount_price(self):
         discount = (self.price * self.percentage) / 100
-        return int(self.price - discount)
+        return self.price - discount
 
     class Meta:
         verbose_name = 'Product'

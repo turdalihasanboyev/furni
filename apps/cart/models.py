@@ -28,7 +28,7 @@ class Cart(BaseModel):
 class CartItem(BaseModel):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_item_cart")
     product = models.ForeignKey("product.Product", on_delete=models.CASCADE, related_name="cart_item_product")
-    quantity = models.IntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
         unique_together = ('cart', 'product')
@@ -37,7 +37,7 @@ class CartItem(BaseModel):
 
     @property
     def total_price(self):
-        return int(self.product.discount_price * self.quantity)
+        return self.product.discount_price * self.quantity
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name}"
@@ -76,8 +76,8 @@ class Order(BaseModel):
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_item_order")
     product = models.ForeignKey('product.Product', on_delete=models.SET_NULL, null=True, related_name='order_item_product')
-    quantity = models.IntegerField(default=1)
-    price = models.IntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     class Meta:
         verbose_name = 'OrderItem'
@@ -85,7 +85,7 @@ class OrderItem(BaseModel):
 
     @property
     def total_price(self):
-        return int(self.price * self.quantity)
+        return self.price * self.quantity
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name} ({self.price})"
