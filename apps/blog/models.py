@@ -1,3 +1,19 @@
 from django.db import models
 
-# Create your models here.
+from ckeditor.fields import RichTextField
+
+from apps.common.models import BaseModel
+
+
+class Article(BaseModel):
+    title = models.CharField(max_length=150, unique=True, db_index=True)
+    desciption = RichTextField(null=True, blank=True)
+    image = models.ImageField(upload_to='article_images', default='images/default.png')
+    author = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = 'Article'
+        verbose_name_plural = 'Articles'
+
+    def __str__(self):
+        return f'{self.title}'

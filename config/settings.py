@@ -12,22 +12,31 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+env.read_env(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jsx23n^#m*1(pz*p@7ka-&$i)ep4g%o8f*tt^k-+t$-*ja6-dp'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'user.CustomUser'
+
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'profile'
+# LOGOUT_REDIRECT_URL = 'home'
 
 
 # Application definition
@@ -51,7 +60,23 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'query_counter',
 ]
+
+{
+    'DQC_SLOWEST_COUNT': 5,
+    'DQC_TABULATE_FMT': 'pretty',
+    'DQC_SLOW_THRESHOLD': 1,
+    'DQC_INDENT_SQL': True,
+    'DQC_PYGMENTS_STYLE': 'tango',
+    'DQC_PRINT_ALL_QUERIES': False,
+    'DQC_COUNT_QTY_MAP': {
+        5: 'green',
+        10: 'white',
+        20: 'yellow',
+        30: 'red',
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,6 +86,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'query_counter.middleware.DjangoQueryCounterMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
