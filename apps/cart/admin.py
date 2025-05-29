@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Cart, CartItem, Order, OrderItem
+from .models import Cart, CartItem, Order, OrderItem, Wishlist, WishlistItem
 
 
 @admin.register(Cart)
@@ -66,6 +66,29 @@ class OrderItemAdmin(admin.ModelAdmin):
         'quantity',
         'price',
         'total_price',
+        'created_at',
+        'updated_at',
+    )
+
+
+@admin.register(Wishlist)
+class WishlistAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'user',
+        'session_id',
+        'ip_address',
+        'created_at',
+        'updated_at',
+    )
+
+
+@admin.register(WishlistItem)
+class WishlistItemAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'wishlist',
+        'product',
         'created_at',
         'updated_at',
     )

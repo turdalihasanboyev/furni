@@ -89,3 +89,33 @@ class OrderItem(BaseModel):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name} ({self.price})"
+
+
+class Wishlist(BaseModel):
+    user = models.ForeignKey('user.CustomUser', on_delete=models.CASCADE, related_name='wishlist_user')
+    session_id = models.CharField(max_length=225, null=True, blank=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Wishlist'
+        verbose_name_plural = 'Wishlists'
+
+    @property
+    def items_count(self):
+        return self.wishlist_items.count()
+
+    def __str__(self):
+        return f"Wishlist {self.id} ({self.user})"
+
+
+class WishlistItem(BaseModel):
+    wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, related_name='wishlist_items')
+    product = models.ForeignKey('product.Product', on_delete=models.CASCADE, related_name='wishlist_product')
+
+    class Meta:
+        unique_together = ('wishlist', 'product')
+        verbose_name = 'Wishlist Item'
+        verbose_name_plural = 'Wishlist Items'
+
+    def __str__(self):
+        return f"{self.product.name} in Wishlist {self.wishlist.id}"
