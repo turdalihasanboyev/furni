@@ -11,7 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
         'image',
         'price',
         'percentage',
-        'discount_price',
+        'discount',
         'price_type',
         'created_at',
         'updated_at',

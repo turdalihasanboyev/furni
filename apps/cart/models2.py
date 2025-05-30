@@ -1,33 +1,27 @@
 from django.db import models
 
+from ckeditor.fields import RichTextField
+
 from apps.common.models import BaseModel
 
 
 class Cart(BaseModel):
-    is_completed = models.BooleanField(default=False)
-    ip_address = models.GenericIPAddressField(null=True, blank=True)
-    user = models.ForeignKey('user.CustomUser', on_delete=models.SET_NULL, null=True, related_name='cart_user')
-    session_id = models.CharField(max_length=225, null=True, blank=True)
+    user = models.OneToOneField(
+        'user.CustomUser', on_delete=models.CASCADE, related_name='cart_user')
 
     class Meta:
         verbose_name = 'Cart'
         verbose_name_plural = 'Carts'
 
-    @property
-    def total(self):
-        return sum(item.total_price for item in self.cart_item_cart.all())
-
-    @property
-    def items_count(self):
-        return self.cart_item_cart.count()
-
     def __str__(self):
-        return f"Cart {self.id} ({self.user})"
+        return f"Cart ({self.user})"
 
 
 class CartItem(BaseModel):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_item_cart")
-    product = models.ForeignKey("product.Product", on_delete=models.CASCADE, related_name="cart_item_product")
+    cart = models.ForeignKey(
+        Cart, on_delete=models.CASCADE, related_name="cart_item_cart")
+    product = models.ForeignKey(
+        "product.Product", on_delete=models.CASCADE, related_name='cart_item_product')
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
@@ -52,14 +46,15 @@ class Order(BaseModel):
         ('cancelled', 'Cancelled'),
     )
 
-    user = models.ForeignKey('user.CustomUser', on_delete=models.SET_NULL, null=True, related_name='order_user')
+    user = models.ForeignKey(
+        'user.CustomUser', on_delete=models.CASCADE, related_name='order_user')
     status = models.CharField(max_length=20, choices=STATUS, default='new')
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     phone_number = models.CharField(max_length=20)
     address = models.CharField(max_length=255)
-    notes = models.TextField(blank=True, null=True)
+    notes = RichTextField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Order'
@@ -74,8 +69,10 @@ class Order(BaseModel):
 
 
 class OrderItem(BaseModel):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_item_order")
-    product = models.ForeignKey('product.Product', on_delete=models.SET_NULL, null=True, related_name='order_item_product')
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name='order_item_order')
+    product = models.ForeignKey(
+        'product.Product', on_delete=models.CASCADE, related_name='order_item_product')
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
@@ -92,25 +89,26 @@ class OrderItem(BaseModel):
 
 
 class Wishlist(BaseModel):
-    user = models.ForeignKey('user.CustomUser', on_delete=models.CASCADE, related_name='wishlist_user')
-    session_id = models.CharField(max_length=225, null=True, blank=True)
-    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user = models.OneToOneField(
+        'user.CustomUser', on_delete=models.CASCADE, related_name='wishlist_user')
 
     class Meta:
         verbose_name = 'Wishlist'
         verbose_name_plural = 'Wishlists'
 
     @property
-    def items_count(self):
-        return self.wishlist_items.count()
+    def total_items(self):
+        return self.wishlist_item_wishlist.count()
 
     def __str__(self):
-        return f"Wishlist {self.id} ({self.user})"
+        return f"Wishlist ({self.user})"
 
 
 class WishlistItem(BaseModel):
-    wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, related_name='wishlist_items')
-    product = models.ForeignKey('product.Product', on_delete=models.CASCADE, related_name='wishlist_product')
+    wishlist = models.ForeignKey(
+        Wishlist, on_delete=models.CASCADE, related_name='wishlist_item_wishlist')
+    product = models.ForeignKey(
+        'product.Product', on_delete=models.CASCADE, related_name='wishlist_item_product')
 
     class Meta:
         unique_together = ('wishlist', 'product')

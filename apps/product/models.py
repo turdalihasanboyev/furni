@@ -21,9 +21,8 @@ class Product(BaseModel):
     price_type = models.CharField(max_length=10, choices=PRICE_TYPE, default='USD')
 
     @property
-    def discount_price(self):
-        discount = (self.price * self.percentage) / 100
-        return self.price - discount
+    def discount(self):
+        return self.price - ((self.price * self.percentage) / 100)
 
     class Meta:
         verbose_name = 'Product'
