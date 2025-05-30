@@ -8,6 +8,8 @@ class CartAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'user',
+        'cart_sub_total_price',
+        'cart_total_price',
         'created_at',
         'updated_at',
     )
@@ -20,6 +22,7 @@ class CartItemAdmin(admin.ModelAdmin):
         'cart',
         'product',
         'quantity',
+        'item_total_price',
         'created_at',
         'updated_at',
     )
@@ -36,6 +39,7 @@ class OrderAdmin(admin.ModelAdmin):
         'email',
         'phone_number',
         'address',
+        'total_price',
         'created_at',
         'updated_at',
     )
@@ -56,6 +60,7 @@ class OrderItemAdmin(admin.ModelAdmin):
         'product',
         'quantity',
         'price',
+        'item_total_price',
         'created_at',
         'updated_at',
     )
