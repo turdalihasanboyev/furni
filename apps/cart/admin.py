@@ -45,7 +45,6 @@ class OrderAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'phone_number',
-        'address',
     )
 
 

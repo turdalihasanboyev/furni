@@ -173,7 +173,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# .gitignore file for Python projects
+# < ================ .gitignore file for Python projects. ================ > #
 
 .idea/
 media/

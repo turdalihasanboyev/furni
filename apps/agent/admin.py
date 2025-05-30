@@ -14,5 +14,5 @@ class AgentAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
     )
-    search_fields = ('full_name', 'job',)
+    search_fields = ('full_name',)
     list_filter = ('role',)
