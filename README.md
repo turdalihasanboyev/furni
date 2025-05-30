@@ -1,4 +1,3 @@
-
 # Furni 🛋️
 
 Furni is a Django-based web application for managing and showcasing furniture products. It provides a foundation for building an e-commerce platform with features like product listings, categories, image management, and admin controls.
@@ -14,8 +13,8 @@ Furni is a Django-based web application for managing and showcasing furniture pr
 
 ## 🧱 Tech Stack
 
-- Python 3.10+
-- Django 4.x
+- Python 3.12.3 +
+- Django 5.2
 - PostgreSQL (or SQLite by default)
 - HTML/CSS (Bootstrap or custom styles)
 - Docker (optional)

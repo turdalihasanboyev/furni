@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
 from pathlib import Path
 
 import environ
@@ -35,7 +34,7 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'user.CustomUser'
 
 # LOGIN_URL = 'login'
-# LOGIN_REDIRECT_URL = 'profile'
+# LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'home'
 
 

@@ -5,21 +5,12 @@ from ckeditor.fields import RichTextField
 from apps.common.models import BaseModel
 
 
-class Testimonial(BaseModel):
-    full_name = models.CharField(max_length=225)
-    image = models.ImageField(upload_to='testimonial_images', null=True, blank=True)
-    job = models.CharField(max_length=225)
-    testimonial = RichTextField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Testimonial'
-        verbose_name_plural = 'Testimonials'
-
-    def __str__(self):
-        return f'{self.full_name}'
-
-
 class Agent(BaseModel):
+    class Role(models.TextChoices):
+        AGENT = 'Agent' 'agent'
+        TESTIMONIAL = 'Testimonial' 'testimonial'
+
+    role = models.CharField(max_length=50, choices=Role.choices, default=Role.AGENT)
     full_name = models.CharField(max_length=225)
     image = models.ImageField(upload_to='agent_images', null=True, blank=True)
     job = models.CharField(max_length=225)
