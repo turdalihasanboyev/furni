@@ -3,9 +3,9 @@ from django.contrib import admin
 from .models import SubEmail
 
 
-admin.site.site_header = "furni Admin Dashboard"
-admin.site.site_title = "furni Admin Dashboard"
-admin.site.index_title = "Welcome to furni Admin Dashbord!"
+admin.site.site_header = "Furni Admin Dashboard"
+admin.site.site_title = "Furni Admin Dashboard"
+admin.site.index_title = "Welcome to Furni Admin Dashbord!"
 
 
 @admin.register(SubEmail)

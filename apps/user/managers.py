@@ -11,7 +11,6 @@ class CustomUserManager(UserManager):
         user.save(using=self._db)
         return user
 
-
     def create_superuser(self, email, password=None, **extra_fields):
         user = self.create_user(email, password=password, **extra_fields)
         user.is_staff = True
