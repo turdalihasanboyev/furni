@@ -7,8 +7,8 @@ from apps.common.models import BaseModel
 
 class Agent(BaseModel):
     class Role(models.TextChoices):
-        AGENT = 'Agent' 'agent'
-        TESTIMONIAL = 'Testimonial' 'testimonial'
+        AGENT = 'agent', 'Agent'
+        TESTIMONIAL = 'testimonial', 'Testimonial'
 
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.AGENT)
     full_name = models.CharField(max_length=225)
