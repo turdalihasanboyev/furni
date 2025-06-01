@@ -30,6 +30,7 @@ class RegisterPageView(View):
             return redirect('register')
 
         user = CustomUser.objects.create_user(email=email, password=password)
+        user.save()
         messages.success(request, 'User created successfully')
         login(request, user)
         return redirect('home')

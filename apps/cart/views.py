@@ -1,13 +1,18 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 
 from django.views import View
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 from django.contrib import messages
 
-from .models import Cart, CartItem
+from .models import Cart, CartItem, Order, OrderItem
 from apps.product.models import Product
+from apps.common.models import SubEmail
 
 
+@method_decorator(login_required, name='dispatch')
 class AddToCartView(View):
     def get(self, request, pk):
         url = request.META.get("HTTP_REFERER")
@@ -25,24 +30,100 @@ class AddToCartView(View):
         return redirect(url)
 
 
+@method_decorator(login_required, name='dispatch')
 class RemoveFromCartView(View):
     def get(self, request, pk):
         url = request.META.get("HTTP_REFERER")
-        product = get_object_or_404(Product, id=pk)
-        cart = get_object_or_404(Cart, user=request.user)
-        cart_item = CartItem.objects.filter(cart=cart, product=product).first()
-
-        if cart_item:
-            if cart_item.quantity > 1:
-                cart_item.quantity -= 1
-                cart_item.save()
-                messages.success(request, f"Quantity of {product.name} decreased by 1.")
-            else:
-                cart_item.delete()
-                messages.success(request, f"{product.name} removed from cart.")
-                if not CartItem.objects.filter(cart=cart).exists():
-                    cart.delete()
-                    messages.info(request, "Your cart is now empty and has been deleted.")
-        else:
-            messages.warning(request, "Item not found in your cart.")
+        cart_item = get_object_or_404(CartItem, id=pk, cart__user=request.user)
+        cart = cart_item.cart
+        cart_item.delete()
+        messages.success(request, "Item removed from cart")
+        if not cart.cart_item_cart.exists():
+            cart.delete()
+            messages.info(request, "Cart deleted because it was empty")
         return redirect(url)
+
+
+@method_decorator(login_required, name='dispatch')
+class CartPageView(View):
+    def get(self, request):
+        cart = get_object_or_404(Cart, user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+        cart_total_price = cart.cart_total_price
+        cart_sub_total_price = cart.cart_sub_total_price
+
+        context = {
+            "cart": cart,
+            "cart_items": cart_items,
+            "cart_total_price": cart_total_price,
+            "cart_sub_total_price": cart_sub_total_price,
+        }
+
+        return render(request, "cart.html", context)
+
+    def post(self, request):
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+
+        if name and email:
+            sub_email = SubEmail()
+            sub_email.name = name
+            sub_email.email = email
+            sub_email.save()
+            messages.success(request, "Your email has been added to our mailing list.")
+            return redirect("cart")
+
+
+@method_decorator(login_required, name='dispatch')
+class OrderPageView(View):
+    def get(self, request):
+        return render(request, "checkout.html")
+
+    def post(self, request):
+        cart = get_object_or_404(Cart, user=request.user)
+        cart_sub_total = cart.cart_sub_total_price
+        cart_items = cart.cart_item_cart.all()
+
+        name = request.POST.get('name')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        notes = request.POST.get('notes', "")
+
+        if name and email:
+            SubEmail.objects.create(name=name, email=email)
+            messages.success(request, "Your email has been added to our mailing list.")
+
+        order = Order.objects.create(
+            user=request.user,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone_number=phone_number,
+            address=address,
+            notes=notes,
+        )
+        order.save()
+
+        order_total_price = order.total_price
+
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                price=item.product.discount,
+            )
+        cart.delete()
+        messages.success(request, "Your order has been placed successfully!")
+
+        context = {
+            'cart': cart,
+            'cart_sub_total': cart_sub_total,
+            'cart_items': cart_items,
+            'order_total_price': order_total_price,
+        }
+
+        return render(request, "checkout.html", context)
