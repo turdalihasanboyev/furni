@@ -22,17 +22,13 @@
 </head>
 
 <body>
-
     <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-
         <div class="container">
             <a class="navbar-brand" href="/">Furni<span>.</span></a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
                 aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarsFurni">
                 <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
                     <li><a class="nav-link" href="/">Home</a></li>
@@ -41,14 +37,11 @@
                     <li><a class="nav-link" href="/article/">Blog</a></li>
                     <li><a class="nav-link" href="{% url 'contact' %}">Contact us</a></li>
                 </ul>
-
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-
                     <li><a class="nav-link" href="cart.html"><img src="{% static '' %}images/cart.svg"></a></li>
                 </ul>
             </div>
         </div>
-
     </nav>
 
     {% block content %}
@@ -57,18 +50,15 @@
 
     <footer class="footer-section">
         <div class="container relative">
-
             <div class="sofa-img">
                 <img src="{% static '' %}images/sofa.png" alt="Image" class="img-fluid">
             </div>
-
             <div class="row">
                 <div class="col-lg-8">
                     <div class="subscription-form">
                         <h3 class="d-flex align-items-center"><span class="me-1"><img
-                                    src="{% static '' %}images/envelope-outline.svg" alt="Image"
-                                    class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
-
+                            src="{% static '' %}images/envelope-outline.svg" alt="Image"
+                            class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
                         <form method="post" class="row g-3">
                             {% csrf_token %}
                             <div class="col-auto">
@@ -83,15 +73,12 @@
                                 </button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
-
             <div class="row g-5 mb-5">
                 <div class="col-lg-4">
                     <div class="mb-4 footer-logo-wrap"><a href="/" class="footer-logo">Furni<span>.</span></a></div>
-
                     <ul class="list-unstyled custom-social">
                         <li><a href="https://www.facebook.com/"><span class="fa fa-brands fa-facebook-f"></span></a>
                         </li>
@@ -101,24 +88,19 @@
                         <li><a href="https://www.linkedin.com/"><span class="fa fa-brands fa-linkedin"></span></a></li>
                     </ul>
                 </div>
-
             </div>
-
             <div class="border-top copyright">
                 <div class="row pt-4">
                     <div class="col-lg-6">
                         <p class="mb-2 text-center text-lg-start">Copyright &copy;
                             <script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash;
-                            Designed by <a href="https://t.me/turdalihasanboyev/">Turdali Hasanboyev</a>
+                            Designed by <a href="https://github.com/turdalihasanboyev/">Turdali Hasanboyev</a>
                         </p>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </footer>
-
     <script src="{% static '' %}js/bootstrap.bundle.min.js"></script>
     <script src="{% static '' %}js/tiny-slider.js"></script>
     <script src="{% static '' %}js/custom.js"></script>

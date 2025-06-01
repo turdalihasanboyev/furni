@@ -27,7 +27,7 @@ class HomePageView(View):
         }
 
         return render(request, 'index.html', context)
-    
+
     def post(self, request):
         email = request.POST.get('email')
         name = request.POST.get('name')
