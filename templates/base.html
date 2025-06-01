@@ -36,6 +36,12 @@
                     <li><a class="nav-link" href="{% url 'about' %}">About us</a></li>
                     <li><a class="nav-link" href="/article/">Blog</a></li>
                     <li><a class="nav-link" href="{% url 'contact' %}">Contact us</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                     <li><a class="nav-link" href="cart.html"><img src="{% static '' %}images/cart.svg"></a></li>
