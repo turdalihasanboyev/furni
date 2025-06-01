@@ -7,10 +7,9 @@ from .models import Contact
 class ContactAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'first_name',
-        'last_name',
+        'full_name',
         'email',
         'created_at',
         'updated_at',
     )
-    search_fields = ('first_name', 'last_name', 'email',)
+    search_fields = ('full_name', 'email',)

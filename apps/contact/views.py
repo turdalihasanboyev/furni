@@ -18,15 +18,13 @@ class ContactPageView(View):
 
     def post(self, request):
         name = request.POST.get('name')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
+        full_name = request.POST.get('full_name')
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        if first_name and last_name and email and message:
+        if full_name and email and message:
             contact = Contact()
-            contact.first_name = first_name
-            contact.last_name = last_name
+            contact.full_name = full_name
             contact.email = email
             contact.message = message
             contact.save()
