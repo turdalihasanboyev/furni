@@ -68,10 +68,6 @@ class Order(BaseModel):
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
 
-    @property
-    def total_price(self):
-        return sum(item.price * item.quantity for item in self.order_item_order.all())
-
     def __str__(self):
         return f"Order {self.id} - {self.first_name} {self.last_name}"
 
@@ -87,10 +83,6 @@ class OrderItem(BaseModel):
     class Meta:
         verbose_name = 'Order Item'
         verbose_name_plural = 'Order Items'
-
-    @property
-    def item_total_price(self):
-        return self.price * self.quantity
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name} ({self.price})"

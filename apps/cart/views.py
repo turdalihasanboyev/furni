@@ -79,10 +79,12 @@ class OrderPageView(View):
     def get(self, request):
         cart = get_object_or_404(Cart, user=request.user)
         cart_items = CartItem.objects.filter(cart=cart)
+        total = cart.cart_total_price
 
         context = {
             'cart': cart,
             'cart_items': cart_items,
+            'total': total,
         }
 
         return render(request, "checkout.html", context)
@@ -102,6 +104,7 @@ class OrderPageView(View):
         if name and email:
             SubEmail.objects.get_or_create(name=name, email=email)
             messages.success(request, "Your email has been added to our mailing list.")
+            return redirect("order")
 
         if first_name and last_name and email and phone_number and address:
             order = Order.objects.create(
@@ -114,19 +117,17 @@ class OrderPageView(View):
                 notes=notes,
             )
             order.save()
+            messages.success(request, "Your order has been created.")
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity,
+                    price=item.product.discount,
+                )
+            cart.delete()
+            messages.success(request, "Your order has been placed successfully!")
+            return redirect('thank-you')
         else:
             messages.error(request, "Please fill in all fields.")
             return redirect("order")
-
-        for item in cart_items:
-            OrderItem.objects.create(
-                order=order,
-                product=item.product,
-                quantity=item.quantity,
-                price=item.product.discount,
-            )
-
-        cart.delete()
-
-        messages.success(request, "Your order has been placed successfully!")
-        return redirect('thank-you')
