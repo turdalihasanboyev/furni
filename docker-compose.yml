@@ -1,0 +1,40 @@
+services:
+  db:
+    container_name: furni_db_container
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: furni
+      POSTGRES_USER: furni
+      POSTGRES_PASSWORD: furni
+    ports:
+      - "5435:5432"
+    volumes:
+      - furni_postgres_data:/var/lib/postgresql/data
+  web:
+    build: .
+    image: furni_web_image
+    container_name: furni_web_container
+    ports:
+      - "3223:3223"
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      - DEBUG=False
+      - DJANGO_ALLOWED_HOSTS=*
+      - DJANGO_SUPERUSER_EMAIL=turdalihasanboyev144@gmail.com
+      - DJANGO_SUPERUSER_PASSWORD=123
+      - DATABASE_NAME=furni
+      - DATABASE_USER=furni
+      - DATABASE_PASSWORD=furni
+      - DATABASE_HOST=db
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             python manage.py createsuperuser --noinput || true &&
+             python manage.py runserver 0.0.0.0:3223"
+
+volumes:
+  furni_postgres_data:
