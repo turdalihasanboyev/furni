@@ -34,11 +34,9 @@
 			{% for agent in agents %}
 			<div class="col-12 col-md-6 col-lg-3 mb-5 mb-md-0">
 				<img src="{{ agent.image.url }}" class="img-fluid mb-5">
-				<h3 clas><a href="#">{{ agent.full_name }}</a></h3>
+				<h3 clas>{{ agent.full_name }}</h3>
 				<span class="d-block position mb-4">{{ agent.job }}</span>
 				<p>{{ agent.description|slice:':30'|safe }}</p>
-				<p class="mb-0"><a href="#" class="more dark">Learn More <span class="icon-arrow_forward"></span></a>
-				</p>
 			</div>
 			{% endfor %}
 		</div>

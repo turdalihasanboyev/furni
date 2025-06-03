@@ -29,17 +29,21 @@ class RegisterPageView(View):
             messages.error(request, 'Email already exists')
             return redirect('register')
 
-        user = CustomUser.objects.create_user(email=email, password=password)
-        user.save()
-        messages.success(request, 'User created successfully')
-        login(request, user)
-        return redirect('home')
+        if email and password and confirm_password:
+            user = CustomUser.objects.create_user(email=email, password=password)
+            user.save()
+            messages.success(request, 'User created successfully')
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid input')
+            return redirect('register')
 
 
 class LoginPageView(View):
     def get(self, request):
         return render(request, 'login.html')
-    
+
     def post(self, request):
         email = request.POST.get('email')
         password = request.POST.get('password')
