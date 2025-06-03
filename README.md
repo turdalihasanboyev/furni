@@ -1,98 +1,121 @@
-# Furni 🛋️
+# 🏋️ Furni – Django E-commerce Furniture Store
 
-Furni is a Django-based web application for managing and showcasing furniture products. It provides a foundation for building an e-commerce platform with features like product listings, categories, image management, and admin controls.
-
-## 🚀 Features
-
-- Product catalog with images, descriptions, and pricing
-- Admin panel for managing products and categories
-- Custom apps organized under a modular architecture
-- Static files and templates for frontend customization
-- Environment configuration using `.env` file
-- Django ORM and admin customization
-
-## 🧱 Tech Stack
-
-- Python 3.12.3 +
-- Django 5.2
-- PostgreSQL (or SQLite by default)
-- HTML/CSS (Bootstrap or custom styles)
-- Docker (optional)
-
-## 📁 Project Structure
-
-```
-furni/
-├── apps/                # Django apps like products, users, core
-├── config/              # Project settings and URLs
-├── templates/           # HTML templates
-├── static/              # CSS, JS, and images
-├── manage.py
-├── .env.example         # Environment variable template
-├── requirements.txt     # Project dependencies
-```
-
-## ⚙️ Installation
-
-1. **Clone the repository:**
-
-```bash
-git clone https://github.com/turdalihasanboyev/furni.git
-cd furni
-```
-
-2. **Create a virtual environment and activate it:**
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. **Install dependencies:**
-
-```bash
-pip install -r requirements.txt
-```
-
-4. **Create and configure `.env` file:**
-
-Copy the `.env.example` and update with your own settings.
-
-```bash
-cp .env.example .env
-```
-
-5. **Run migrations and start the development server:**
-
-```bash
-python manage.py migrate
-python manage.py runserver
-```
-
-## 🧪 Testing
-
-To run tests (if implemented):
-
-```bash
-python manage.py test
-```
-
-## 🛠️ TODO
-
-- Add user authentication and registration
-- Implement shopping cart and checkout system
-- Add product search and filters
-- Write unit and integration tests
-- Improve UI with modern frontend framework
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests.
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+Furni is a modern, responsive e-commerce web application built with Django, tailored for selling furniture online. It offers a seamless shopping experience with features like user authentication, product browsing, cart management, and order processing.
 
 ---
 
-Made with ❤️ by [Turdali Hasanboyev](https://github.com/turdalihasanboyev)
+## 🧰 Tech Stack
+
+* **Backend:** Django 5.2
+* **Frontend:** HTML5, CSS3, JavaScript
+* **Database:** SQLite (default), PostgreSQL (optional)
+* **Other:** Bootstrap 5, Django Framework
+
+---
+
+## 🚀 Features
+
+* User Registration & Authentication
+* Product Catalog with Categories
+* Shopping Cart Functionality
+* Order Placement & Management
+* Admin Dashboard for Product & Order Management
+* Responsive Design for Mobile & Desktop
+
+---
+
+## 📦 Installation
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/turdalihasanboyev/furni.git
+   cd furni
+   ```
+
+2. **Create a Virtual Environment:**
+
+   ```bash
+   python -m venv env
+   source env/bin/activate  # On Windows: env\Scripts\activate
+   ```
+
+3. **Install Dependencies:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure Environment Variables:**
+
+   Rename `.env.example` to `.env` and update the necessary configurations.
+
+5. **Apply Migrations:**
+
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+6. **Create a Superuser:**
+
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+7. **Run the Development Server:**
+
+   ```bash
+   python manage.py runserver
+   ```
+
+   Access the application at `http://127.0.0.1:8000/`.
+
+---
+
+## 🖼️ Screenshots
+
+### 🏠 Home Page
+
+![Home](image.png)
+
+### 🛒 Checkout Page
+
+![Checkout](image-1.png)
+
+---
+
+## 📁 Project Structure
+
+```bash
+furni/
+├── apps/
+│   ├── cart/
+│   ├── order/
+│   ├── product/
+│   └── user/
+├── config/
+├── static/
+├── templates/
+├── manage.py
+├── requirements.txt
+└── .env.example
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 📬 Contact
+
+For any inquiries or feedback, please contact [Turdali Hasanboyev](https://github.com/turdalihasanboyev/).
